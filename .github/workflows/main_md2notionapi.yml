@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -26,12 +26,15 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
-      
+
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,17 +50,20 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
+
+      - name: Unzip artifact for deployment
+        run: unzip release.zip
       
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_70CD3CC437BF44958F8C858344F7E614 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_706A2859792543D7A2E15DA92BD041E1 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_60629C85687D4474A2E8FB8FF9B569E6 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_8675FEBAF424480BA2F2F60E8ACF4F25 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_39A362FC4360443F91FC38C9684A22CE }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_7E42CD09149C4490B8F3485F32C867A3 }}
 
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 'md2notionapi'
           slot-name: 'Production'
