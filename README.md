@@ -6,7 +6,7 @@ Uses https://www.npmjs.com/package/@tryfabric/martian
 
 ## Usage:
 
-Make a POST request to https://salty-sierra-55955.herokuapp.com/
+Make a POST request to md2notionapi.azuremediasites.net or 
 with the markdown string you want to convert
 
 #### Headers:
