@@ -6,7 +6,7 @@ Uses https://www.npmjs.com/package/@tryfabric/martian
 
 ## Usage:
 
-Make a POST request to https://md2notionapi.azuremediasites.net
+Make a POST request to https://md2notionapi.azurewebsites.net
 or https://md2notionapi.vercel.app
 with the markdown string you want to convert
 
